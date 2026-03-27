@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishGuard | Zero-Day Threat Intel</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Flash Overlay for Phishing -->
+    <div id="alert-flash" class="alert-flash hidden"></div>
+
+    <div class="dashboard-wrapper">
+        
+        <!-- TOP HEADER -->
+        <header class="top-header glass">
+            <div class="header-left">
+                <div class="logo">
+                    <span class="icon">☣</span> PhishGuard <span class="badge">SOC.v2</span>
+                </div>
+            </div>
+            <div class="header-center">
+                <div class="status-box" id="global-status">
+                    <div class="pulse-dot"></div>
+                    <span id="global-text">SYSTEM LIVE : MONITORING INTEL</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="user-info">Node: ALPHA-7 | Security Clearance: Maximum</div>
+            </div>
+        </header>
+
+        <!-- MAIN LAYOUT container -->
+        <div class="main-layout">
+            
+            <!-- LEFT SIDEBAR -->
+            <aside class="sidebar glass">
+                <div class="sidebar-title">OPERATIONS</div>
+                <nav>
+                    <button class="nav-btn active" onclick="switchTab('tab-dashboard')">
+                        <span class="btn-icon">▣</span> Dashboard
+                    </button>
+                    <button class="nav-btn" onclick="switchTab('tab-url')">
+                        <span class="btn-icon">⎈</span> URL Scanner
+                    </button>
+                    <button class="nav-btn" onclick="switchTab('tab-msg')">
+                        <span class="btn-icon">✉</span> Message Scanner
+                    </button>
+                </nav>
+
+                <div class="sidebar-bottom">
+                    <div class="cyber-radar">
+                        <div class="radar-scan"></div>
+                        <div class="radar-dot dot-1"></div>
+                        <div class="radar-dot dot-2"></div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- CENTER CONTENT -->
+            <main class="center-content">
+                
+                <!-- ANALYTICS WIDGETS -->
+                <div class="widgets-row">
+                    <div class="widget glass">
+                        <div class="w-title">TOTAL SCANS</div>
+                        <div class="w-value" id="wdgt-scans">0</div>
+                    </div>
+                    <div class="widget glass">
+                        <div class="w-title">THREATS DETECTED</div>
+                        <div class="w-value threat-text" id="wdgt-threats">0</div>
+                    </div>
+                    <div class="widget glass">
+                        <div class="w-title">SAFE REQUESTS</div>
+                        <div class="w-value safe-text" id="wdgt-safe">0</div>
+                    </div>
+                    <div class="widget glass gauge-widget">
+                        <div class="w-title">RISK LEVEL</div>
+                        <div class="gauge-container">
+                            <div class="gauge-fill" id="risk-gauge"></div>
+                            <div class="gauge-text" id="risk-text">LOW</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SCAN PANELS (TABS) -->
+                <div class="workspace">
+                    
+                    <div id="tab-dashboard" class="tab-pane active glass">
+                        <h2>ZERO-DAY THREAT INTELLIGENCE PLATFORM</h2>
+                        <p class="subtitle">Select URL Scanner or Message Scanner from the sidebar to inject payloads for heuristic evaluation.</p>
+                        
+                        <div class="hacker-decor">
+                            <pre>
+   _____ _    _  _____  _____       
+  |  ___| |  | ||_   _|/  ___|      
+  | |__ | |  | |  | |  \ `--.       
+  |  __|| |/\| |  | |   `--. \      
+  | |___\  /\  / _| |_ /\__/ /      
+  \____/ \/  \/  \___/ \____/       
+                            </pre>
+                        </div>
+                    </div>
+
+                    <div id="tab-url" class="tab-pane glass hidden">
+                        <h2>URL ENGINE</h2>
+                        <div class="input-section">
+                            <input type="text" id="input-url" class="cyber-input" placeholder="Inject URL payload (ex: http://suspicious-site.com)" autocomplete="off">
+                            <button class="scan-btn" onclick="runScan('url')">
+                                <span>INITIALIZE SCAN SEQUENCE</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="tab-msg" class="tab-pane glass hidden">
+                        <h2>MESSAGE ENGINE</h2>
+                        <div class="input-section">
+                            <textarea id="input-msg" class="cyber-input" placeholder="Inject email/SMS raw payload..." rows="4"></textarea>
+                            <button class="scan-btn" onclick="runScan('msg')">
+                                <span>INITIALIZE SCAN SEQUENCE</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- RESULT PANEL (BIG CARD) -->
+                    <div id="result-card" class="result-card glass hidden">
+                        <div class="result-top">
+                            <h1 id="result-status" class="status-safe">SAFE</h1>
+                            <div class="confidence-circle">
+                                <svg viewBox="0 0 36 36" class="circular-chart">
+                                    <path class="circle-bg"
+                                      d="M18 2.0845
+                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                        a 15.9155 15.9155 0 0 1 0 -31.831"
+                                    />
+                                    <path class="circle" id="conf-circle"
+                                      stroke-dasharray="0, 100"
+                                      d="M18 2.0845
+                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                        a 15.9155 15.9155 0 0 1 0 -31.831"
+                                    />
+                                    <text x="18" y="20.35" class="percentage" id="conf-text">0%</text>
+                                </svg>
+                                <span>CONFIDENCE</span>
+                            </div>
+                        </div>
+
+                        <div class="progress-wrap">
+                            <div class="progress-bar">
+                                <div id="result-bar" class="progress-fill safe-glow"></div>
+                            </div>
+                        </div>
+
+                        <div class="explanation-box">
+                            <h3>HEURISTIC ANALYSIS:</h3>
+                            <p id="result-expl"></p>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+
+            <!-- RIGHT PANEL: LIVE ACTIVITY FEED -->
+            <aside class="activity-feed glass">
+                <div class="sidebar-title">LIVE ACTIVITY FEED</div>
+                <div class="feed-container" id="feed-logs">
+                    <!-- Logs go here -->
+                </div>
+            </aside>
+
+        </div>
+    </div>
+
+    <!-- Scanning Overlay Animation -->
+    <div id="scan-overlay" class="scan-overlay hidden">
+        <div class="scanner-box">
+            <div class="scan-line"></div>
+            <h2 class="blink-text">ANALYZING PAYLOAD...</h2>
+            <p>Comparing against Zero-Day Heuristics</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

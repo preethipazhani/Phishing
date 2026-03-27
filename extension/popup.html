@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      width: 300px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 15px;
+      margin: 0;
+      background: #1e1e24;
+      color: white;
+    }
+    h2 {
+      margin: 0 0 10px 0;
+      font-size: 1.2rem;
+      color: #00ff88;
+      border-bottom: 1px solid #333;
+      padding-bottom: 5px;
+    }
+    .url-box {
+      background: #2a2a35;
+      padding: 10px;
+      border-radius: 5px;
+      word-wrap: break-word;
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+      color: #aaa;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #00ff88;
+      color: #000;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover { background: #00cc6a; }
+    
+    #result {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 5px;
+      display: none;
+    }
+    .danger { background: rgba(255, 51, 102, 0.2); border: 1px solid #ff3366; }
+    .safe { background: rgba(0, 255, 136, 0.2); border: 1px solid #00ff88; }
+    
+    .status { font-weight: bold; margin-bottom: 5px; display: block; }
+    .confidence { font-size: 0.8rem; opacity: 0.8; }
+  </style>
+</head>
+<body>
+  <h2>🛡️ PhishGuard</h2>
+  <div class="url-box" id="current-url">Loading...</div>
+  <button id="scan-btn">Scan Current Page</button>
+  
+  <div id="result">
+    <span id="res-status" class="status"></span>
+    <span id="res-conf" class="confidence"></span>
+    <p id="res-exp" style="font-size: 0.8rem; margin-top: 5px;"></p>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
