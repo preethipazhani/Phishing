@@ -49,6 +49,9 @@
                     <button class="nav-btn" onclick="switchTab('tab-msg')">
                         <span class="btn-icon">✉</span> Message Scanner
                     </button>
+                    <button class="nav-btn" onclick="switchTab('tab-email')">
+                        <span class="btn-icon">📥</span> Email Analyzer
+                    </button>
                 </nav>
 
                 <div class="sidebar-bottom">
@@ -121,6 +124,23 @@
                             <textarea id="input-msg" class="cyber-input" placeholder="Inject email/SMS raw payload..." rows="4"></textarea>
                             <button class="scan-btn" onclick="runScan('msg')">
                                 <span>INITIALIZE SCAN SEQUENCE</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="tab-email" class="tab-pane glass hidden">
+                        <h2>EMAIL FORENSICS</h2>
+                        <p class="subtitle" style="margin-bottom: 20px; color: var(--text-dim);">Upload a .eml file exported from your email client to perform deep header inspection.</p>
+                        <div class="input-section">
+                            <label class="cyber-file-upload">
+                                <input type="file" id="input-eml" accept=".eml" class="hidden-file-input" onchange="updateFileName()">
+                                <div class="upload-area">
+                                    <span class="upload-icon">⬇</span>
+                                    <span id="file-name-display">Upload a .eml file exported from your email client</span>
+                                </div>
+                            </label>
+                            <button class="scan-btn" onclick="runEmailScan()">
+                                <span>INITIALIZE HEADER INSPECTION</span>
                             </button>
                         </div>
                     </div>
